@@ -1,15 +1,19 @@
 /*
  * Create a list that holds all of your cards
  */
-
-
+let cards = ['fa-diamond', 'fa-paper-plane-o', 'fa-anchor' , 'fa-bolt',
+			  'fa-cube' , 'fa-leaf', 'fa-bicycle', 'fa-bomb'];
+cards = [...cards,...cards];
+let shuffledCards = [];
+const deck = $('.deck');
+let openCard = {index: -1, name: '', isOpen: false};
+let matchedCards = [];
 /*
  * Display the cards on the page
  *   - shuffle the list of cards using the provided "shuffle" method below
  *   - loop through each card and create its HTML
  *   - add each card's HTML to the page
  */
-
 // Shuffle function from http://stackoverflow.com/a/2450976
 function shuffle(array) {
     var currentIndex = array.length, temporaryValue, randomIndex;
@@ -25,6 +29,21 @@ function shuffle(array) {
     return array;
 }
 
+function resetGame() {
+	shuffledCards = shuffle(cards);
+	deck.empty();
+	openCard = {index: -1, name: '', isOpen: false};
+    matchedCards = [];
+	let newElement = ``;
+	for(let i = 0; i < shuffledCards.length; i++){
+		newElement = $(`<li class="card">
+						<i class="fa ${shuffledCards[i]}"></i>
+					  </li>`);
+		newElement.data('index', i);
+		deck.append(newElement);
+	}
+}
+resetGame();
 
 /*
  * set up the event listener for a card. If a card is clicked:
@@ -36,3 +55,37 @@ function shuffle(array) {
  *    + increment the move counter and display it on the page (put this functionality in another function that you call from this one)
  *    + if all cards have matched, display a message with the final score (put this functionality in another function that you call from this one)
  */
+function cardMatches(ind) {
+	return (shuffledCards[ind] == openCard.name) ? true : false;
+}
+
+function cardClick(){
+	let $_this = $(this);
+	if(matchedCards.includes($_this.data('index'))) return 0;
+	$_this.toggleClass('open').toggleClass('show');
+	if (!openCard.isOpen){
+		openCard.isOpen = true;
+		openCard.index = $_this.data('index');
+		openCard.name = shuffledCards[$_this.data('index')];
+	}else{
+		if(cardMatches($_this.data('index'))){
+			matchedCards.push($_this.data('index'), openCard.index);
+			openCard.isOpen = false;
+		}else{
+			const cardIndex = openCard.index;
+			openCard.isOpen = false;
+			setTimeout(function(){
+				$_this.toggleClass('open').toggleClass('show');
+				$('.card').eq(cardIndex).toggleClass('open').toggleClass('show');
+			},500);
+		}
+	}
+}
+
+ $('.deck').on('click', '.card', function(){
+	cardClick.call(this);
+ });
+ 
+ $('.restart').click(function(){
+	resetGame();
+ });
