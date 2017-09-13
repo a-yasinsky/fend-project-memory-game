@@ -97,9 +97,14 @@ function cardClick(){
 		}else{
 			const cardIndex = openCard.index;
 			openCard.isOpen = false;
+			const exCard = $('.card').eq(cardIndex);
+			$_this.addClass('animate wrong');
+			exCard.addClass('animate wrong');
 			setTimeout(function(){
 				$_this.toggleClass('open').toggleClass('show');
-				$('.card').eq(cardIndex).toggleClass('open').toggleClass('show');
+				exCard.toggleClass('open').toggleClass('show');
+				$_this.removeClass('animate wrong');
+				exCard.removeClass('animate wrong');
 			},500);
 		}
 		moves++;
