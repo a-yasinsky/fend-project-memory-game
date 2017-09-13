@@ -11,8 +11,9 @@ let matchedCards = [];
 const movesSpan = $('.moves');
 let moves = 0;
 let stars = 3;
-const starsBreaks = [9, 13];
+const starsBreaks = [10, 16];
 const starsElem = $('.stars');
+const overlay = $('.overlay');
 /*
  * Display the cards on the page
  *   - shuffle the list of cards using the provided "shuffle" method below
@@ -55,8 +56,10 @@ function resetGame() {
 	openCard = {index: -1, name: '', isOpen: false};
     matchedCards = [];
 	moves = 0;
+	stars = 3;
 	updateMoves();
 	updateStars();
+	overlay.hide();
 	let newElement = ``;
 	for(let i = 0; i < shuffledCards.length; i++){
 		newElement = $(`<li class="card">
@@ -98,6 +101,12 @@ function cardClick(){
 			openCard.isOpen = false;
 			$_this.addClass('animate2');
 			exCard.addClass('animate2');
+			//check win
+			setTimeout(function(){
+				$('.stat-moves').text(moves);
+				$('.stat-stars').text(stars);
+				overlay.show();
+			},1000);
 		}else{
 			openCard.isOpen = false;
 			$_this.addClass('animate wrong');
