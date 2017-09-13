@@ -10,6 +10,9 @@ let openCard = {index: -1, name: '', isOpen: false};
 let matchedCards = [];
 const movesSpan = $('.moves');
 let moves = 0;
+let stars = 3;
+const starsBreaks = [9, 13];
+const starsElem = $('.stars');
 /*
  * Display the cards on the page
  *   - shuffle the list of cards using the provided "shuffle" method below
@@ -31,13 +34,19 @@ function shuffle(array) {
     return array;
 }
 
-function updateMovesStars(){
+function updateMoves(){
 	movesSpan.text(moves);
 }
 
-function incrementMoves(){
-	moves++;
-	updateMovesStars();
+function updateStars(){
+	starsElem.empty();
+	let newElement = '';
+	let icon = '';
+	for(let i = 0; i < 3; i++){
+		icon = (i < stars) ? 'fa-star' : 'fa-star-o';
+		newElement = $(`<li><i class="fa ${icon}"></i></li>`);
+		starsElem.append(newElement);
+	}
 }
 
 function resetGame() {
@@ -46,7 +55,8 @@ function resetGame() {
 	openCard = {index: -1, name: '', isOpen: false};
     matchedCards = [];
 	moves = 0;
-	updateMovesStars();
+	updateMoves();
+	updateStars();
 	let newElement = ``;
 	for(let i = 0; i < shuffledCards.length; i++){
 		newElement = $(`<li class="card">
@@ -92,7 +102,12 @@ function cardClick(){
 				$('.card').eq(cardIndex).toggleClass('open').toggleClass('show');
 			},500);
 		}
-		incrementMoves();
+		moves++;
+		updateMoves();
+		if(starsBreaks.includes(moves)) {
+			stars--;
+			updateStars();
+		}
 	}
 }
 
