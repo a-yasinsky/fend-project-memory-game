@@ -91,13 +91,15 @@ function cardClick(){
 		openCard.index = $_this.data('index');
 		openCard.name = shuffledCards[$_this.data('index')];
 	}else{
+		const cardIndex = openCard.index;
+		const exCard = $('.card').eq(cardIndex);
 		if(cardMatches($_this.data('index'))){
-			matchedCards.push($_this.data('index'), openCard.index);
+			matchedCards.push($_this.data('index'), cardIndex);
 			openCard.isOpen = false;
+			$_this.addClass('animate2');
+			exCard.addClass('animate2');
 		}else{
-			const cardIndex = openCard.index;
 			openCard.isOpen = false;
-			const exCard = $('.card').eq(cardIndex);
 			$_this.addClass('animate wrong');
 			exCard.addClass('animate wrong');
 			setTimeout(function(){

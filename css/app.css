@@ -121,6 +121,12 @@ https://css-tricks.com/snippets/css/shake-css-keyframe-animation/
   perspective: 1000px;
 }
 
+.animate2 {
+  animation: zoom 0.82s cubic-bezier(.36,.07,.19,.97) both;
+  backface-visibility: hidden;
+  perspective: 1000px;
+}
+
 @keyframes shake {
   10%, 90% {
     transform: translate3d(-1px, 0, 0);
@@ -136,5 +142,20 @@ https://css-tricks.com/snippets/css/shake-css-keyframe-animation/
 
   40%, 60% {
     transform: translate3d(4px, 0, 0);
+  }
+}
+
+@keyframes zoom {
+  10% {
+    transform: scale(0.8, 1.2);
+  }
+  40% {
+    transform: scale(1.2, 0.8);
+  }
+  70% {
+    transform: scale(0.9, 1.1);
+  }
+  90% {
+    transform: scale(1.1, 0.9);
   }
 }
