@@ -8,6 +8,8 @@ let shuffledCards = [];
 const deck = $('.deck');
 let openCard = {index: -1, name: '', isOpen: false};
 let matchedCards = [];
+const movesSpan = $('.moves');
+let moves = 0;
 /*
  * Display the cards on the page
  *   - shuffle the list of cards using the provided "shuffle" method below
@@ -29,11 +31,22 @@ function shuffle(array) {
     return array;
 }
 
+function updateMovesStars(){
+	movesSpan.text(moves);
+}
+
+function incrementMoves(){
+	moves++;
+	updateMovesStars();
+}
+
 function resetGame() {
 	shuffledCards = shuffle(cards);
 	deck.empty();
 	openCard = {index: -1, name: '', isOpen: false};
     matchedCards = [];
+	moves = 0;
+	updateMovesStars();
 	let newElement = ``;
 	for(let i = 0; i < shuffledCards.length; i++){
 		newElement = $(`<li class="card">
@@ -79,6 +92,7 @@ function cardClick(){
 				$('.card').eq(cardIndex).toggleClass('open').toggleClass('show');
 			},500);
 		}
+		incrementMoves();
 	}
 }
 
