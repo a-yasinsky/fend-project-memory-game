@@ -100,7 +100,8 @@ function cardMatches(ind) {
 */
 function cardClick(){
 	let $_this = $(this);
-	if(matchedCards.includes($_this.data('index'))) return 0;
+	if(matchedCards.includes($_this.data('index')) ||
+	   $_this.data('index') === openCard.index) return 0;
 	$_this.toggleClass('open').toggleClass('show');
 	if (!openCard.isOpen){
 		openCard.isOpen = true;
