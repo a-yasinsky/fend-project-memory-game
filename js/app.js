@@ -101,12 +101,12 @@ function cardClick(){
 			openCard.isOpen = false;
 			$_this.addClass('animate2');
 			exCard.addClass('animate2');
-			//check win
-			setTimeout(function(){
-				$('.stat-moves').text(moves);
-				$('.stat-stars').text(stars);
-				overlay.show();
-			},1000);
+			if(matchedCards.length === shuffledCards.length)
+				setTimeout(function(){
+					$('.stat-moves').text(moves);
+					$('.stat-stars').text(stars);
+					overlay.show();
+				},1000);
 		}else{
 			openCard.isOpen = false;
 			$_this.addClass('animate wrong');
