@@ -10,6 +10,7 @@ const deck = $('.deck');
 const movesSpan = $('.moves');
 const starsElem = $('.stars');
 const overlay = $('.overlay');
+const timer = $('.timer');
 // breackpoint for stars changing
 const starsBreaks = [10, 16];
 //current open card obj
@@ -78,6 +79,12 @@ function resetGame() {
 }
 resetGame();
 
+function displayTimer(){
+	let timerEnd = (Date.now() - timerStart) / 1000.0;
+	timer.text(timerEnd);
+	requestAnimationFrame(displayTimer);
+}
+requestAnimationFrame(displayTimer);
 /*
  * set up the event listener for a card. If a card is clicked:
  *  - display the card's symbol (put this functionality in another function that you call from this one)
