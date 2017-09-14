@@ -14,6 +14,7 @@ let stars = 3;
 const starsBreaks = [10, 16];
 const starsElem = $('.stars');
 const overlay = $('.overlay');
+let timerStart = 0;
 /*
  * Display the cards on the page
  *   - shuffle the list of cards using the provided "shuffle" method below
@@ -68,6 +69,7 @@ function resetGame() {
 		newElement.data('index', i);
 		deck.append(newElement);
 	}
+	timerStart = Date.now();
 }
 resetGame();
 
@@ -101,12 +103,15 @@ function cardClick(){
 			openCard.isOpen = false;
 			$_this.addClass('animate2');
 			exCard.addClass('animate2');
-			if(matchedCards.length === shuffledCards.length)
+			if(matchedCards.length === shuffledCards.length) {
+				let timerEnd = (Date.now() - timerStart) / 1000.0;
 				setTimeout(function(){
 					$('.stat-moves').text(moves);
 					$('.stat-stars').text(stars);
+					$('.stat-time').text(timerEnd);
 					overlay.show();
 				},1000);
+			}
 		}else{
 			openCard.isOpen = false;
 			$_this.addClass('animate wrong');
