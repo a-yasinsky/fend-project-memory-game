@@ -5,15 +5,20 @@ let cards = ['fa-diamond', 'fa-paper-plane-o', 'fa-anchor' , 'fa-bolt',
 			  'fa-cube' , 'fa-leaf', 'fa-bicycle', 'fa-bomb'];
 cards = [...cards,...cards];
 let shuffledCards = [];
+// vars with jQuery selectors
 const deck = $('.deck');
-let openCard = {index: -1, name: '', isOpen: false};
-let matchedCards = [];
 const movesSpan = $('.moves');
-let moves = 0;
-let stars = 3;
-const starsBreaks = [10, 16];
 const starsElem = $('.stars');
 const overlay = $('.overlay');
+// breackpoint for stars changing
+const starsBreaks = [10, 16];
+//current open card obj
+let openCard = {index: -1, name: '', isOpen: false};
+// matched cards for win detecting and click prevent
+let matchedCards = [];
+
+let moves = 0;
+let stars = 3;
 let timerStart = 0;
 /*
  * Display the cards on the page
@@ -50,7 +55,7 @@ function updateStars(){
 		starsElem.append(newElement);
 	}
 }
-
+// resets the game (stars, moves, timer, found cards)
 function resetGame() {
 	shuffledCards = shuffle(cards);
 	deck.empty();
@@ -86,7 +91,13 @@ resetGame();
 function cardMatches(ind) {
 	return (shuffledCards[ind] == openCard.name) ? true : false;
 }
-
+/*
+ * Checks if there is an open card, if not make it open
+ * if yes checks both for matching
+ * checks for win with matchedCards.length
+ * animate guess or not
+ * update moves and stars
+*/
 function cardClick(){
 	let $_this = $(this);
 	if(matchedCards.includes($_this.data('index'))) return 0;
