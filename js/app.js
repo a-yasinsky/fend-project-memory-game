@@ -146,7 +146,7 @@ function cardClick(){
  $('.deck').on('click', '.card', function(){
 	cardClick.call(this);
  });
- 
+
  $('.restart').click(function(){
 	resetGame();
  });
